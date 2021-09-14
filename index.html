@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who is duks?</title>
+  <style>
+    @font-face {
+      font-family: "GearedSlab";
+      src: url("GearedSlab.eot");
+      src: url("GearedSlab.woff") format("woff"),
+      url("GearedSlab.otf") format("opentype"),
+      url("GearedSlab.svg#filename") format("svg");
+    }
+    body {
+      padding: 0;
+      margin: 0;
+      font-size: larger;
+      text-align: center;
+      font-family: 'Lato';
+      display: flex;
+      flex-direction: column;
+    }
+    .logo {
+      margin-top: 30px;  
+      width: 150px;
+      height: auto;
+      display: flex;
+      align-self: center;
+    }
+    .main {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      /* height: 100vh; */
+      align-items: center;
+      justify-content: center;
+      padding: 0 5%;
+    }
+    .direction {
+      display: flex;
+      flex-direction: row;
+    }
+    ul {
+      list-style-position: outside;
+      text-align: left;
+    }
+    .wrapper ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: center;
+    }
+    .wrapper {
+      width: 300px;
+    }
+    /* h1, h2, h3 {
+      font-family: 'GearedSlab';
+    } */
+    hr {
+      border-color: inherit;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .italic {
+      font-style: italic;
+    }
+    .office_1 {
+      border: 10px crimson;
+      color: black;
+      border-radius: 25px;
+      border-color: crimson;
+    }
+    .office_2 {
+      border: 10px limegreen;
+      color: black;
+      border-radius: 25px;
+      border-color: limegreen;
+    }
+    .office_3 {
+      border: 10px lightskyblue;
+      color: black;
+      border-radius: 25px;
+      border-color: lightskyblue;
+    }
+    #nowWrapper {
+      padding: 40px;
+      border-style: double;
+    }
+    #laterWrapper {
+      padding: 15px;
+      border-style: dashed;
+      border-width: 5px;
+    }
+    .menu_button {
+      -webkit-box-shadow: 0 4px 10px 0 rgba(0,0,0,.4);
+      -webkit-transition: .3s;
+      background-color: #2e3d5c;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px 0 rgba(0,0,0,.4);
+      color: #fff!important;
+      margin: 15px 0 0;
+      padding: 20px 30px 15px;
+      pointer-events: auto;
+      text-transform: uppercase;
+      transition: .3s;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      cursor: pointer;
+    }
+    .menu_button:focus {
+      outline: 0;
+    }
+    @media screen and (max-width: 767px){
+      body {
+        font-size: small;
+        display: flex;
+        flex-direction: column;
+        padding: 0 10%;
+      }
+      .logo {
+        margin-top: 30px;
+        width: 100px;
+      }
+      .main {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 30px;
+      }
+      .wrapper {
+        width: auto;
+      }
+      .direction {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="logo" src="https://wp.goboat.dk/wp-content/uploads/2018/04/goboat-logo-2021.svg"/>
+  <div class="direction">
+    <div class="main">
+      <p class="italic"><span id="weekday"></span>, <span id="month"></span> <span id="date"></span>, week <span id="week"></span></p>
+      <span class="column">
+        <p>The duks of the week is:</p>
+        <div id="nowWrapper" class="wrapper">
+          <h1 id="nowTeam"></h1>
+          <hr class="hr">
+          <ul id="nowMembers"></ul>
+        </div>
+      </span>
+      <br/>
+      <br/>
+      <span class="column">
+        <p>Next week's duks:</p>
+        <div id="laterWrapper" class="wrapper">
+          <h2 id="laterTeam"></h2>
+          <hr class="hr">
+          <ul id="laterMembers"></ul>
+        </div>
+      </span>
+    </div>
+    <div class="main">
+      <h1>
+        DUKSE-SCHEME
+      </h1>
+
+      <p>
+        Even if you aren't currently the duks, it's still important to clean up and help out. The duks' tasks consist of:
+      </p>
+      <ul>
+        <li>Being strict but fair (but mostly strict) when people don't follow house rules</li><br>
+        <li>To start / empty / fisll the dishwasher</li><br>
+        <li>Buy milk for the whole week (on Mondays)</li><br>
+        <li>Water the plants</li><br>
+        <li>Make sure that there are clean and fresh towels and plenty of toilet paper</li><br>
+        <li>Take out the trash</li><br>
+        <li>Make sure that the meeting room is nice and tidy after lunch - around 12:45</li>
+      </ul>
+      <a href="https://www.frokostfirmaet.dk/ejby-lindhardt-gastronomi/#print-menu-ow/" target="_blank"><button class="menu_button">Menu of the week</button></a>
+    </div>
+  </div>
+
+
+
+
+<script>
+  Date.prototype.getWeek = function() {
+	var onejan = new Date(this.getFullYear(),0,1)
+	if(onejan.getDay() == 1 || onejan.getDay() == 2 || onejan.getDay() == 3 || onejan.getDay() == 4){
+		yearsWeekDeductionFactor = 0
+	}else{
+		yearsWeekDeductionFactor = 1
+	}
+	result = Math.ceil((((this - onejan) / 86400000) + onejan.getDay())/7)
+	if(this.getDay() == 0) { // if the weekday is Sunday
+		result = result - 1
+	}
+	if(result == 1){ // if the calculated week number is 1
+		prevOnejan = new Date(this.getFullYear()-1,0,1)
+		prevDay = new Date(onejan - 1)
+		result = Math.ceil((((prevDay - prevOnejan) / 86400000) + prevOnejan.getDay())/7)
+		return result
+	}
+	  return result - yearsWeekDeductionFactor
+  }
+  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const months = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const teams = [
+    {
+      name: 'Office 1',
+      subName: '- center office',
+      members: [
+        'Christoffer',
+        'Signe',
+        'Mads',
+        'Kristiane',
+        'Laura',
+        'Nanna',
+        'Anne Sofie',
+      ]
+    },
+    {
+      name: 'Office 2',
+      subName: '- corner office',
+      members: [
+        'Anders',
+        'Thomas',
+        'Kasper',
+        'Philip',
+        'Eric',
+        
+      ]
+    },
+    {
+      name: 'Office 3',
+      subName: '- quiet office',
+      members: [
+        'Nikolaj',
+        'Maria (Web)',
+        'Maria (Graphic)',
+        'Mikkel',
+        'Elias',
+      ]
+    }
+  ]
+  const plan = {}
+  var today = new Date()
+  var dateSuffix = (date) => {
+    date = date.toString(date)
+    switch(date.substr(date.length-1, date.length)) { 
+      case "1":
+        return 'st'
+      case "2":
+        return 'nd'
+      case "3":
+        return 'rd'
+      default:
+        return 'th'
+    }
+  }
+  for (var i = 1; i <= 53; i += 3) {
+    plan[i] = {team: teams[0].name, class: 'office_1', members: teams[0].members}
+  }
+  for (var i = 2; i <= 53; i += 3) {
+    plan[i] = {team: teams[1].name, class: 'office_2', members: teams[1].members}
+  }
+  for (var i = 3; i <= 53; i += 3) {
+    plan[i] = {team: teams[2].name, class: 'office_3', members: teams[2].members}
+  }
+  document.querySelector('#date').innerHTML = today.getDate()+dateSuffix(today.getDate())
+  document.querySelector('#month').innerHTML = months[today.getMonth()]
+  document.querySelector('#weekday').innerHTML = weekdays[today.getDay()]
+  
+  document.querySelector('#nowTeam').innerHTML = plan[today.getWeek()].team
+  document.querySelector('#nowWrapper').classList.add(plan[today.getWeek()].class)
+  document.querySelector('#nowMembers').innerHTML = ''
+  for (member of plan[today.getWeek()].members){
+    li = document.createElement('li')
+    li.innerHTML = member
+    document.querySelector('#nowMembers').appendChild(li)
+  }
+  document.querySelector('#week').innerHTML = today.getWeek()
+  document.querySelector('#laterTeam').innerHTML = plan[today.getWeek()+1].team
+  document.querySelector('#laterWrapper').classList.add(plan[today.getWeek()+1].class)
+  for (member of plan[today.getWeek()+1].members){
+    li = document.createElement('li')
+    li.innerHTML = member
+    document.querySelector('#laterMembers').appendChild(li)
+  }
+</script>
+</body>
+</html>
